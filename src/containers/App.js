@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+
 import Navbar from "../components/navbar";
 import Notes from "../components/notes";
 import "./App.css";
@@ -12,6 +14,17 @@ class App extends React.Component {
       }
     ]
   };
+
+  componentDidMount() {
+    axios.get("https://api.myjson.com/bins/emrdr")
+      .then(response => {
+        console.log(response);
+        const { data: { notes } } = response;
+        this.setState({ notes });
+      }).catch(error => {
+        console.log(error);
+      });
+  }
 
   handleDelete = index => {
     const { notes } = this.state;
